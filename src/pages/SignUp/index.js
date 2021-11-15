@@ -1,28 +1,31 @@
 import React, {useState} from 'react';
 import {Platform} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import {
   Background,
   Container,
-  Logo,
-  Input,
   AreaInput,
+  Input,
   SubmitButton,
   TextButton,
-  Link,
-  LinkText,
-} from './styles';
+} from '../SignIn/styles';
 
-function SignIn() {
-  const navigation = useNavigation();
-
+function SignUp() {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   return (
-    <Background>
-      <Container behavior={Platform.OS === 'ios' ?? 'padding'}>
-        <Logo source={require('../../assets/Logo.png')} />
+    <Background behavior={Platform.OS === 'ios' ?? 'padding'}>
+      <Container>
+        <AreaInput>
+          <Input
+            placeholder="Nome"
+            autoCorrect={false}
+            autoCapitalize="none"
+            value={name}
+            onChaneText={t => setName(t)}
+          />
+        </AreaInput>
 
         <AreaInput>
           <Input
@@ -36,7 +39,7 @@ function SignIn() {
 
         <AreaInput>
           <Input
-            placeholder="Email"
+            placeholder="Senha"
             autoCorrect={false}
             autoCapitalize="none"
             value={password}
@@ -45,15 +48,11 @@ function SignIn() {
         </AreaInput>
 
         <SubmitButton>
-          <TextButton>Acessar</TextButton>
+          <TextButton>Cadastrar</TextButton>
         </SubmitButton>
-
-        <Link onPress={() => navigation.navigate('SignUp')}>
-          <LinkText>Criar uma conta</LinkText>
-        </Link>
       </Container>
     </Background>
   );
 }
 
-export default SignIn;
+export default SignUp;
