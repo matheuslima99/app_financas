@@ -9,10 +9,18 @@ import {
   TextButton,
 } from '../SignIn/styles';
 
+import {useAuth} from '../../contexts/auth';
+
 function SignUp() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const {signUp} = useAuth();
+
+  const handleSignUp = () => {
+    signUp(email, password, name);
+    alert('Usuário cadastrado');
+  };
 
   return (
     <Background behavior={Platform.OS === 'ios' ?? 'padding'}>
@@ -23,7 +31,7 @@ function SignUp() {
             autoCorrect={false}
             autoCapitalize="none"
             value={name}
-            onChaneText={t => setName(t)}
+            onChangeText={t => setName(t)}
           />
         </AreaInput>
 
@@ -47,7 +55,7 @@ function SignUp() {
           />
         </AreaInput>
 
-        <SubmitButton>
+        <SubmitButton onPress={handleSignUp}>
           <TextButton>Cadastrar</TextButton>
         </SubmitButton>
       </Container>

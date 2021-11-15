@@ -20,7 +20,12 @@ function SignIn() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {user} = useAuth();
+  const {signIn} = useAuth();
+
+  const handleSignIn = () => {
+    signIn(email, password);
+  };
+
 
   return (
     <Background>
@@ -47,7 +52,7 @@ function SignIn() {
           />
         </AreaInput>
 
-        <SubmitButton onPress={() => alert()}>
+        <SubmitButton onPress={handleSignIn}>
           <TextButton>Acessar</TextButton>
         </SubmitButton>
 

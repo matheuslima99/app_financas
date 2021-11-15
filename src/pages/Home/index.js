@@ -1,10 +1,15 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Button} from 'react-native';
+
+import {useAuth} from '../../contexts/auth';
 
 function Home() {
+  const {user, signOut} = useAuth();
+
   return (
     <View>
-      <Text>Pagina Home</Text>
+      <Text>Bem vindo: {user && user.name} </Text>
+      <Button title="Sair" onPress={() => signOut()} />
     </View>
   );
 }
