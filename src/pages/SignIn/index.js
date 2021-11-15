@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {Platform} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {
@@ -13,11 +13,14 @@ import {
   LinkText,
 } from './styles';
 
+import {useAuth} from '../../contexts/auth';
+
 function SignIn() {
   const navigation = useNavigation();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const {user} = useAuth();
 
   return (
     <Background>
@@ -36,7 +39,7 @@ function SignIn() {
 
         <AreaInput>
           <Input
-            placeholder="Email"
+            placeholder="Senha"
             autoCorrect={false}
             autoCapitalize="none"
             value={password}
@@ -44,7 +47,7 @@ function SignIn() {
           />
         </AreaInput>
 
-        <SubmitButton>
+        <SubmitButton onPress={() => alert()}>
           <TextButton>Acessar</TextButton>
         </SubmitButton>
 
