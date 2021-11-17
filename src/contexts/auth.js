@@ -28,17 +28,18 @@ export default function AuthProvider({children}) {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(async value => {
+        const uid = value.user.uid;
         await firebase
           .database()
           .ref('users')
-          .child(value.user.uid)
+          .child(uid)
           .set({
             balance: 0,
             name,
           })
           .then(() => {
             const data = {
-              uid: value.user.uid,
+              key: uid,
               name,
               email: value.user.email,
             };

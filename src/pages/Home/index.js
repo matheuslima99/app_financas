@@ -30,8 +30,8 @@ function Home() {
     <Container>
       <Header />
       <InfoArea>
-        <Username>{user.balance}</Username>
-        <Userbalance>R$ 1.314,70</Userbalance>
+        <Username>{user.name ?? 'Olá!'}</Username>
+        <Userbalance>R$ {user.balance ?? 0}</Userbalance>
       </InfoArea>
 
       <InfoArea>

@@ -3,6 +3,8 @@ import styled from 'styled-components/native';
 export const Container = styled.View`
   width: 100%;
   margin: 20px 0px 10px 0px;
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.02);
 `;
 
 export const TypeArea = styled.View`

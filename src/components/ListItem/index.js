@@ -16,7 +16,7 @@ const ListItem = ({data}) => {
         />
         <Text>{data.type}</Text>
       </TypeArea>
-      <Balance>R$: 900</Balance>
+      <Balance>R$ {data.value.toFixed(2)}</Balance>
     </Container>
   );
 };
