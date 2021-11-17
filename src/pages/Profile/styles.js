@@ -9,7 +9,7 @@ export const Container = styled.View`
 export const UsernameArea = styled.View`
   width: 90%;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 40px;
 `;
 
 export const Username = styled.Text`

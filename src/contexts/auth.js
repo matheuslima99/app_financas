@@ -64,7 +64,7 @@ export default function AuthProvider({children}) {
             let data = {
               name: snapshot.val().name,
               uid: value.user.uid,
-              email: snapshot.val().email,
+              balance: snapshot.val().balance,
             };
             setUser(data);
             storageUser(data);

@@ -12,6 +12,8 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {useAuth} from '../../contexts/auth';
 
+import Header from '../../components/Header';
+
 function Profile() {
   const navigation = useNavigation();
 
@@ -19,6 +21,8 @@ function Profile() {
 
   return (
     <Container>
+      <Header />
+
       <UsernameArea>
         <Username>{user.name != '' ? `Olá, ${user.name}!` : 'Olá!'}</Username>
       </UsernameArea>
