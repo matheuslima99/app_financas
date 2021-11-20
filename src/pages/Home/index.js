@@ -11,7 +11,6 @@ import {
 } from './styles';
 import {ActivityIndicator} from 'react-native';
 
-import {format} from 'date-fns';
 import firebase from '../../services/firebaseConnections';
 
 import {useAuth} from '../../contexts/auth';

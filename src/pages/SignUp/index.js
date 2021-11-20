@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Platform} from 'react-native';
+import {Platform, ActivityIndicator} from 'react-native';
 import {
   Background,
   Container,
@@ -15,7 +15,7 @@ function SignUp() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {signUp} = useAuth();
+  const {signUp, loadingAuth} = useAuth();
 
   const handleSignUp = () => {
     signUp(email, password, name);
@@ -51,11 +51,16 @@ function SignUp() {
             autoCapitalize="none"
             value={password}
             onChangeText={t => setPassword(t)}
+            secureTextEntry={true}
           />
         </AreaInput>
 
         <SubmitButton onPress={handleSignUp}>
-          <TextButton>Cadastrar</TextButton>
+          {loadingAuth ? (
+            <ActivityIndicator size={20} color="#fff" />
+          ) : (
+            <TextButton>Cadastrar</TextButton>
+          )}
         </SubmitButton>
       </Container>
     </Background>

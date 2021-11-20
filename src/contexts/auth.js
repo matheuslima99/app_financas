@@ -12,6 +12,7 @@ export default function AuthProvider({children}) {
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadingAuth, setLoadingAuth] = useState(false);
 
   useEffect(() => {
     const loadStorage = async () => {
@@ -29,6 +30,7 @@ export default function AuthProvider({children}) {
   }, []);
 
   const signUp = async (email, password, name) => {
+    setLoadingAuth(true);
     await firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
@@ -49,13 +51,16 @@ export default function AuthProvider({children}) {
               },
             ]);
           });
+        setLoadingAuth(false);
       })
       .catch(error => {
         alert(error.code);
+        setLoadingAuth(false);
       });
   };
 
   const signIn = async (email, password) => {
+    setLoadingAuth(true);
     await firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
@@ -72,10 +77,12 @@ export default function AuthProvider({children}) {
             };
             setUser(data);
             storageUser(data);
+            setLoadingAuth(false);
           });
       })
       .catch(error => {
         alert(error.code);
+        setLoadingAuth(false);
       });
   };
 
@@ -99,6 +106,7 @@ export default function AuthProvider({children}) {
         signIn,
         signUp,
         signOut,
+        loadingAuth,
       }}>
       {children}
     </AuthContext.Provider>
@@ -107,6 +115,6 @@ export default function AuthProvider({children}) {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  const {user, signed, signUp, signIn, loading, signOut} = context;
-  return {user, signed, signUp, signIn, loading, signOut};
+  const {user, signed, signUp, signIn, loading, signOut, loadingAuth} = context;
+  return {user, signed, signUp, signIn, loading, signOut, loadingAuth};
 };
