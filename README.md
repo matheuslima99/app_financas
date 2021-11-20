@@ -129,7 +129,7 @@ Para começar, você deve ter instalado e configurado o NodeJs em seu sistema op
 ## Usage
 
 <p align="center">
-    <img src="github/financas_app.gif" alt="Logo" height="300">
+    <img src="github/financas_app.gif" alt="Logo">
 
 
  Ao abrir o aplicativo, o usuário terá a opção de logar ou se cadastrar. Uma vez cadastrado, o usuário poderá logar e registrar todos os seus gastos financeiros.
