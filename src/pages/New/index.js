@@ -65,19 +65,21 @@ function Register() {
         value: parseFloat(value),
         key: _key,
         type,
-        date: format(new Date(), 'dd/MM/yyyy'),
+        date: format(new Date(), 'dd/MM/yy'),
       });
 
     let _user = await firebase.database().ref('users').child(uid);
 
     await _user.once('value').then(snapshot => {
-      let balance = snapshot.val().balance;
+      let balance = parseFloat(snapshot.val().balance);
 
       let setBalance = _user.child('balance');
 
       type === 'receita'
-        ? setBalance.set(parseFloat(balance) + parseFloat(value))
-        : setBalance.set(parseFloat(balance) - parseFloat(value));
+        ? (balance += parseFloat(value))
+        : (balance -= parseFloat(value));
+
+      setBalance.set(balance);
     });
 
     Keyboard.dismiss();

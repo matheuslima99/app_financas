@@ -11,6 +11,7 @@ import {
 } from './styles';
 import {ActivityIndicator} from 'react-native';
 
+import {format} from 'date-fns';
 import firebase from '../../services/firebaseConnections';
 
 import {useAuth} from '../../contexts/auth';
@@ -21,12 +22,21 @@ import ListItem from '../../components/ListItem';
 function Home() {
   const {user} = useAuth();
   const [records, setRecords] = useState([]);
+  const [balance, setBalance] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadRecords = async () => {
       setLoading(true);
       const uid = user.key;
+
+      await firebase
+        .database()
+        .ref('users')
+        .child(uid)
+        .on('value', snapshot => {
+          setBalance(parseFloat(snapshot.val().balance));
+        });
 
       await firebase
         .database()
@@ -37,12 +47,11 @@ function Home() {
 
           snapshot.forEach(childItem => {
             const data = {
-              key: childItem.val().key,
+              key: childItem.key,
               type: childItem.val().type,
               val: childItem.val().value,
-              date: childItem.val().date,
             };
-            setRecords(oldArray => [...oldArray, data]);
+            setRecords(oldArray => [...oldArray, data].reverse());
           });
           setLoading(false);
         });
@@ -55,7 +64,7 @@ function Home() {
       <Header />
       <InfoArea>
         <Username>{user.name ?? 'Olá!'}</Username>
-        <Userbalance _balance={user.balance}>R$ {user.balance}</Userbalance>
+        <Userbalance _balance={balance}>R$ {balance.toFixed(2)}</Userbalance>
       </InfoArea>
 
       <InfoArea>
