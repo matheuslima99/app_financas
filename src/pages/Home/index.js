@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Container,
   InfoArea,
@@ -7,7 +7,11 @@ import {
   Text,
   MovementArea,
   MovementList,
+  ContainerList,
 } from './styles';
+import {ActivityIndicator} from 'react-native';
+
+import firebase from '../../services/firebaseConnections';
 
 import {useAuth} from '../../contexts/auth';
 
@@ -16,22 +20,42 @@ import ListItem from '../../components/ListItem';
 
 function Home() {
   const {user} = useAuth();
-  const [records, setRecords] = useState([
-    {key: '1', type: 'receita', value: 134},
-    {key: '2', type: 'despesa', value: 1434},
-    {key: '3', type: 'receita', value: 134},
-    {key: '4', type: 'despesa', value: 85.4},
-    {key: '5', type: 'receita', value: 85.4},
-    {key: '6', type: 'despesa', value: 85.4},
-    {key: '7', type: 'despesa', value: 85.4},
-  ]);
+  const [records, setRecords] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadRecords = async () => {
+      setLoading(true);
+      const uid = user.key;
+
+      await firebase
+        .database()
+        .ref('records')
+        .child(uid)
+        .on('value', snapshot => {
+          setRecords([]);
+
+          snapshot.forEach(childItem => {
+            const data = {
+              key: childItem.val().key,
+              type: childItem.val().type,
+              val: childItem.val().value,
+              date: childItem.val().date,
+            };
+            setRecords(oldArray => [...oldArray, data]);
+          });
+          setLoading(false);
+        });
+    };
+    loadRecords();
+  }, []);
 
   return (
     <Container>
       <Header />
       <InfoArea>
         <Username>{user.name ?? 'Olá!'}</Username>
-        <Userbalance>R$ {user.balance ?? 0}</Userbalance>
+        <Userbalance _balance={user.balance}>R$ {user.balance}</Userbalance>
       </InfoArea>
 
       <InfoArea>
@@ -39,12 +63,18 @@ function Home() {
       </InfoArea>
 
       <MovementArea>
-        <MovementList
-          showsVerticalScrollIndicator={false}
-          data={records}
-          keyExtractor={item => item.key}
-          renderItem={({item}) => <ListItem data={item} />}
-        />
+        {loading ? (
+          <ContainerList>
+            <ActivityIndicator size={30} color="#00b94a;" />
+          </ContainerList>
+        ) : (
+          <MovementList
+            showsVerticalScrollIndicator={false}
+            data={records}
+            keyExtractor={item => item.key}
+            renderItem={({item}) => <ListItem data={item} />}
+          />
+        )}
       </MovementArea>
     </Container>
   );

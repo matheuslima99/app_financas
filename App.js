@@ -1,5 +1,7 @@
 import React from 'react';
 import 'react-native-gesture-handler';
+import {LogBox} from 'react-native';
+LogBox.ignoreLogs(['Reanimated 2', 'AsyncStorage']);
 import {StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 

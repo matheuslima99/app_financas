@@ -6,7 +6,7 @@ function Picker({type, onChange}) {
   return (
     <PickerView>
       <RNPickerSelect
-        style={{width: '100%', color: '#222'}}
+        style={{width: '100%', color: '#fff'}}
         selectedValue={type}
         onValueChange={itemValue => {
           onChange(itemValue);

@@ -2,9 +2,14 @@ import React, {createContext, useContext, useState, useEffect} from 'react';
 import firebase from '../services/firebaseConnections';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import {useNavigation} from '@react-navigation/core';
+import {Alert} from 'react-native';
+
 const AuthContext = createContext({});
 
 export default function AuthProvider({children}) {
+  const navigation = useNavigation();
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -28,23 +33,21 @@ export default function AuthProvider({children}) {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(async value => {
-        const uid = value.user.uid;
         await firebase
           .database()
           .ref('users')
-          .child(uid)
+          .child(value.user.uid)
           .set({
             balance: 0,
             name,
           })
           .then(() => {
-            const data = {
-              key: uid,
-              name,
-              email: value.user.email,
-            };
-            setUser(data);
-            storageUser(data);
+            Alert.alert('', 'Usuário cadastrado com sucesso.', [
+              {
+                text: 'Ok',
+                onPress: () => navigation.navigate('SignIn'),
+              },
+            ]);
           });
       })
       .catch(error => {
@@ -61,10 +64,10 @@ export default function AuthProvider({children}) {
           .database()
           .ref('users')
           .child(value.user.uid)
-          .once('value', snapshot => {
+          .on('value', snapshot => {
             let data = {
               name: snapshot.val().name,
-              uid: value.user.uid,
+              key: value.user.uid,
               balance: snapshot.val().balance,
             };
             setUser(data);

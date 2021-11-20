@@ -18,7 +18,7 @@ export const Username = styled.Text`
 `;
 
 export const Userbalance = styled.Text`
-  color: #fff;
+  color: ${props => (props._balance < 0 ? '#f00' : '#00b94c')};
   font-size: 28px;
   font-weight: bold;
 `;
@@ -42,4 +42,12 @@ export const MovementArea = styled.View`
 export const MovementList = styled.FlatList`
   width: 100%;
   flex: 1;
+`;
+
+export const ContainerList = styled.View`
+  flex: 1;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.02);
 `;

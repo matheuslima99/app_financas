@@ -19,7 +19,6 @@ function SignUp() {
 
   const handleSignUp = () => {
     signUp(email, password, name);
-    alert('Usuário cadastrado');
   };
 
   return (

@@ -13,15 +13,14 @@ export const InputArea = styled.View`
 `;
 
 export const Input = styled.TextInput.attrs({
-  placeholderTextColor: '#222',
+  placeholderTextColor: 'rgba(255,255,255,0.20)',
 })`
   width: 100%;
-  height: 45px;
-  border-radius: 8px;
+  color: #fff;
   font-size: 17px;
-  color: #000;
+  border-radius: 7px;
   padding: 10px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background: rgba(0, 0, 0, 0.2);
   margin-bottom: 15px;
 `;
 
