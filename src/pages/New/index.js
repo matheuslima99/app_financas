@@ -80,6 +80,7 @@ function Register() {
         : (balance -= parseFloat(value));
 
       setBalance.set(balance);
+      setValue('');
     });
 
     Keyboard.dismiss();
